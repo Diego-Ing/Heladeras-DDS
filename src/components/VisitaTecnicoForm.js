@@ -45,7 +45,7 @@ const VisitaTecnicoForm = () => {
     };
 
     const sendData = async (tecnicoUUID, data) => {
-        const url = `http://localhost:8080/incidentes/registrarVisita?tecnicoUUID=${tecnicoUUID}`;
+        const url = `https://heladeras-dds-back.onrender.com/incidentes/registrarVisita?tecnicoUUID=${tecnicoUUID}`;
 
         try {
             const response = await fetch(url, {

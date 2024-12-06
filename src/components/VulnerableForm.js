@@ -78,7 +78,7 @@ const VulnerableForm = () => {
         };
     
         try {
-            const url = `http://localhost:8080/colaboraciones/persona-vulnerable?colaboradorUUID=${colaboradorUUID}`;
+            const url = `https://heladeras-dds-back.onrender.com/colaboraciones/persona-vulnerable?colaboradorUUID=${colaboradorUUID}`;
             const response = await fetch(url, {
                 method: "POST",
                 headers: {

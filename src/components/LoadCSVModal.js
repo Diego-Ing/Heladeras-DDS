@@ -39,7 +39,7 @@ function LoadCSVModal({ isOpen, onClose }) {
     formData.append('file', file);
 
     try {
-      const response = await fetch('http://localhost:8080/cargaCSV/cargarCSV', {
+      const response = await fetch('https://heladeras-dds-back.onrender.com/cargaCSV/cargarCSV', {
         method: 'POST',
         headers: {
             "Authorization": `Bearer ${accessToken}`,

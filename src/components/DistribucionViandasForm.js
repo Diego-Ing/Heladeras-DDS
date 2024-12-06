@@ -19,7 +19,7 @@ function DistribucionViandasForm() {
     useEffect(() => {
         const fetchHeladeras = async () => {
             try {
-                const response = await fetch('http://localhost:8080/heladeras/listaHeladeras', {
+                const response = await fetch('https://heladeras-dds-back.onrender.com/heladeras/listaHeladeras', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ function DistribucionViandasForm() {
             cantidadViandasAMover: parseInt(distribucion.cantidadViandasAMover, 10),
         };
 
-        fetch(`http://localhost:8080/colaboraciones/distribucion-viandas?colaboradorUUID=${colaboradorUUID}`, {
+        fetch(`https://heladeras-dds-back.onrender.com/colaboraciones/distribucion-viandas?colaboradorUUID=${colaboradorUUID}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -29,7 +29,7 @@ function RecomendarPuntosApp({
   useEffect(() => {
     const fetchLocations = async () => {
       try {
-        const response = await fetch('http://localhost:8080/ubicaciones-googlemaps');
+        const response = await fetch('https://heladeras-dds-back.onrender.com/ubicaciones-googlemaps');
         const data = await response.json();
         console.log(data);
         setLocations(data);

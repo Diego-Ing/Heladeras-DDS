@@ -51,9 +51,9 @@ function ReportesPage() {
 
   const fetchReportData = async (section) => {
     const urls = {
-      fallas: 'http://localhost:8080/reportes/fallas/ultima-semana',
-      'viandas-heladeras': 'http://localhost:8080/reportes/viandas/heladera/ultima-semana',
-      'viandas-colaboradores': 'http://localhost:8080/reportes/viandas/colaborador/ultima-semana',
+      fallas: 'https://heladeras-dds-back.onrender.com/reportes/fallas/ultima-semana',
+      'viandas-heladeras': 'https://heladeras-dds-back.onrender.com/reportes/viandas/heladera/ultima-semana',
+      'viandas-colaboradores': 'https://heladeras-dds-back.onrender.com/reportes/viandas/colaborador/ultima-semana',
     };
 
     const token = getToken(); // Obtén el token de localStorage

@@ -51,7 +51,7 @@ const ReportIssueForm = ({ fridges }) => {
       formDataToUpload.append('file', formData.file);
 
       try {
-        const imageResponse = await fetch('http://localhost:8080/api/storage/upload', {
+        const imageResponse = await fetch('https://heladeras-dds-back.onrender.com/api/storage/upload', {
           method: 'POST',
           body: formDataToUpload,
         });
@@ -88,7 +88,7 @@ const ReportIssueForm = ({ fridges }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/incidentes/reportarFallaTecnica?colaboradorUUID=${colaboradorUUID}`,
+        `https://heladeras-dds-back.onrender.com/incidentes/reportarFallaTecnica?colaboradorUUID=${colaboradorUUID}`,
         {
           method: 'POST',
           headers: {

@@ -27,7 +27,7 @@ const DonacionViandaForm = () => {
     useEffect(() => {
         const fetchHeladeras = async () => {
             try {
-                const response = await fetch('http://localhost:8080/heladeras/listaHeladeras', {
+                const response = await fetch('https://heladeras-dds-back.onrender.com/heladeras/listaHeladeras', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ const DonacionViandaForm = () => {
         };
 
         const colaboradorUUID = localStorage.getItem('sub');
-        const url = `http://localhost:8080/colaboraciones/donacion-vianda?colaboradorUUID=${colaboradorUUID}`;
+        const url = `https://heladeras-dds-back.onrender.com/colaboraciones/donacion-vianda?colaboradorUUID=${colaboradorUUID}`;
 
         try {
             const response = await fetch(url, {

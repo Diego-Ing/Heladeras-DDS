@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
         setUserSub(storedUserSub);
         if(!data){
         try {
-        const response = await fetch(`http://localhost:8080/roles/buscar-por-uuid/${storedUserSub}`, {
+        const response = await fetch(`https://heladeras-dds-back.onrender.com/roles/buscar-por-uuid/${storedUserSub}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

@@ -20,7 +20,7 @@ const CargarHeladeraForm = () => {
 
     try {
       const response = await fetch(
-        'http://localhost:8080/colaboraciones/obtencion-heladera',
+        'https://heladeras-dds-back.onrender.com/colaboraciones/obtencion-heladera',
         {
           method: 'POST',
           headers: {

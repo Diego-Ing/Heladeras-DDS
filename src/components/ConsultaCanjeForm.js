@@ -32,7 +32,7 @@ function ConsultaCanjeForm() {
         const fetchProductos = async () => {
             try {
                 setLoadingProductos(true);
-                const response = await fetch('http://localhost:8080/canjes/ofertasDisponibles', {
+                const response = await fetch('https://heladeras-dds-back.onrender.com/canjes/ofertasDisponibles', {
                     method: 'GET',
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
@@ -67,7 +67,7 @@ function ConsultaCanjeForm() {
             try {
                 setLoadingPuntos(true);
                 const response = await fetch(
-                    `http://localhost:8080/canjes/calcularPuntos?colaboradorUUID=${colaboradorUUID}`,
+                    `https://heladeras-dds-back.onrender.com/canjes/calcularPuntos?colaboradorUUID=${colaboradorUUID}`,
                     {
                         method: 'GET',
                         headers: {
@@ -118,7 +118,7 @@ function ConsultaCanjeForm() {
         try {
             setLoadingCanje(productoId);
             const response = await fetch(
-                `http://localhost:8080/canjes/canjear?colaboradorUUID=${colaboradorUUID}&ofertaId=${producto.ofertaID}`,
+                `https://heladeras-dds-back.onrender.com/canjes/canjear?colaboradorUUID=${colaboradorUUID}&ofertaId=${producto.ofertaID}`,
                 {
                     method: 'POST',
                     headers: {

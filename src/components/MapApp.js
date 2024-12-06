@@ -21,7 +21,7 @@ function MapApp() {
   useEffect(() => {
     const fetchLocations = async () => {
       try {
-        const response = await fetch('http://localhost:8080/ubicaciones-googlemaps', {
+        const response = await fetch('https://heladeras-dds-back.onrender.com/ubicaciones-googlemaps', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

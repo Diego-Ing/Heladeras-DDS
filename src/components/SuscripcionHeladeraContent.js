@@ -85,7 +85,7 @@ function SuscripcionHeladeraContent() {
         const fetchHeladeras = async () => {
             setLoading(true);
             try {
-                const response = await fetch('http://localhost:8080/heladeras/listaHeladeras', {
+                const response = await fetch('https://heladeras-dds-back.onrender.com/heladeras/listaHeladeras', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -136,7 +136,7 @@ function SuscripcionHeladeraContent() {
 
         try {
 
-            const response = await fetch('http://localhost:8080/suscripciones/suscribir', {
+            const response = await fetch('https://heladeras-dds-back.onrender.com/suscripciones/suscribir', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

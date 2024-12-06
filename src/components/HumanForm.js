@@ -95,7 +95,7 @@ function HumanForm({ onBack }) {
     try {
       // Realizar la solicitud POST
       console.log("Enviando formulario:", dto);
-      const response = await fetch("http://localhost:8080/users/personaHumana", {
+      const response = await fetch("https://heladeras-dds-back.onrender.com/users/personaHumana", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -120,7 +120,7 @@ function HumanForm({ onBack }) {
       console.log("ID de la persona humana creada:", id);
     
       // Crear el colaborador
-      const rta = await fetch(`http://localhost:8080/roles/crear-colaborador?colaboradorUUID=${colaboradorUUID}&id=${id}`, {
+      const rta = await fetch(`https://heladeras-dds-back.onrender.com/roles/crear-colaborador?colaboradorUUID=${colaboradorUUID}&id=${id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

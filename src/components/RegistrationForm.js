@@ -69,7 +69,7 @@ function RegistrationForm({ onRegisterSuccess }) {
       category: formData.category || null,
     };
 
-    fetch('http://localhost:8080/usuarios/registrar', {
+    fetch('https://heladeras-dds-back.onrender.com/usuarios/registrar', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

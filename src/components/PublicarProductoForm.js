@@ -44,7 +44,7 @@ function PublicarProductoForm() {
         });
     
         // URL del endpoint para subir la imagen
-        const imageUploadUrl = 'http://localhost:8080/api/storage/upload';
+        const imageUploadUrl = 'https://heladeras-dds-back.onrender.com/api/storage/upload';
         let imageUrl = null; // Guardará la URL pública de la imagen
     
         // 1. Subir la imagen si se proporcionó una
@@ -88,7 +88,7 @@ function PublicarProductoForm() {
         };
         console.log('imagenUrl:', imageUrl);
         // URL del endpoint para crear la oferta
-        const offerCreateUrl = `http://localhost:8080/colaboraciones/oferta?colaboradorUUID=${colaboradorUUID}`;
+        const offerCreateUrl = `https://heladeras-dds-back.onrender.com/colaboraciones/oferta?colaboradorUUID=${colaboradorUUID}`;
     
         try {
             const offerResponse = await fetch(offerCreateUrl, {

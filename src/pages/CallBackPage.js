@@ -15,7 +15,7 @@ const CallbackPage = () => {
             // Inicia el spinner al comenzar la carga
             setIsLoading(true);
             // Hacer el fetch al backend con el código de autorización
-            fetch('http://localhost:8080/callback?code=' + code, {
+            fetch('https://heladeras-dds-back.onrender.com/callback?code=' + code, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

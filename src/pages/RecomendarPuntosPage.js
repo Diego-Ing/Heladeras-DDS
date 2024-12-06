@@ -43,7 +43,7 @@ function RecomendarPuntosPage() {
 
     try {
       const response = await fetch(
-        'http://localhost:8080/colaboraciones/obtencion-heladera',
+        'https://heladeras-dds-back.onrender.com/colaboraciones/obtencion-heladera',
         {
           method: 'POST',
           headers: {
@@ -98,7 +98,7 @@ function RecomendarPuntosPage() {
     }
 
     try {
-      const response = await fetch('http://localhost:8080/heladeras/recomendarPuntos', {
+      const response = await fetch('https://heladeras-dds-back.onrender.com/heladeras/recomendarPuntos', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

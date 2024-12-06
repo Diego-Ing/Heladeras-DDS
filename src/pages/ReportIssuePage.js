@@ -25,7 +25,7 @@ const ReportIssuePage = () => {
       setLoading(true); // Inicia el estado de carga
       try {
         const response = await fetch(
-          "http://localhost:8080/heladeras/listaHeladeras",
+          "https://heladeras-dds-back.onrender.com/heladeras/listaHeladeras",
           {
             method: "GET",
             headers: {

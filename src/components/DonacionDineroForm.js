@@ -15,7 +15,7 @@ function DonacionDineroForm() {
   const handleDonation = async () => {
     setIsLoading(true); // Activar el spinner
     try {
-      const response = await fetch("http://localhost:8080/colaboraciones/donacion-dinero", {
+      const response = await fetch("https://heladeras-dds-back.onrender.com/colaboraciones/donacion-dinero", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",

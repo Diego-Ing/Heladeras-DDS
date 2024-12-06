@@ -95,7 +95,7 @@ function LegalForm({ onBack }) {
     try {
       // Realizar la solicitud POST
       console.log("Enviando formulario:", dto);
-      const response = await fetch("http://localhost:8080/users/personaJuridica", {
+      const response = await fetch("https://heladeras-dds-back.onrender.com/users/personaJuridica", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -118,7 +118,7 @@ function LegalForm({ onBack }) {
     throw new Error("No se pudo extraer el ID de la respuesta.");
   }
       console.log("enviando crear colaborador con uuid ", colaboradorUUID);
-      const rta = await fetch(`http://localhost:8080/roles/crear-colaborador?colaboradorUUID=${colaboradorUUID}&id=${id}`, {
+      const rta = await fetch(`https://heladeras-dds-back.onrender.com/roles/crear-colaborador?colaboradorUUID=${colaboradorUUID}&id=${id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
