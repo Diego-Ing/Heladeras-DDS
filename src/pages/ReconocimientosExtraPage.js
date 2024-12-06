@@ -43,7 +43,7 @@ const RecomendarPersonasPage = () => {
         setIsLoading(true);
         try {
             const response = await fetch(
-                `http://localhost:8082/service-2/recomendaciones-colaboradores?puntosReq=${puntosReq}&viandasDonadasReq=${viandasDonadasReq}&cantMaxColabs=${cantMaxColabs}`,
+                `https://heladeras-dds-recomendador.onrender.com/service-2/recomendaciones-colaboradores?puntosReq=${puntosReq}&viandasDonadasReq=${viandasDonadasReq}&cantMaxColabs=${cantMaxColabs}`,
                 {
                     method: "GET",
                     headers: {
