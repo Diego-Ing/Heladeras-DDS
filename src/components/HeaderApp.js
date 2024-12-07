@@ -12,7 +12,7 @@ function HeaderApp() {
   useEffect(() => {
     const checkRoles = async () => {
       // Retrasa ligeramente la ejecución para asegurar que `cached_roles` esté disponible
-      await new Promise((resolve) => setTimeout(resolve, 1000)); 
+      await new Promise((resolve) => setTimeout(resolve, 2000)); 
       const dato = localStorage.getItem("cached_roles");
 
       if (!dato && isAuthenticated) {
