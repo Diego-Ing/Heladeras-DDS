@@ -43,6 +43,7 @@ function UserProfileModal({ isOpen, onClose }) {
     { path: '/publicar-producto', img: Product, label: 'Publicar Producto/Servicio', allowedRoles: ['ROLE_ADMIN', 'ROLE_COLLABORATOR'] },
     { path: '/cargar-heladera', img: Product, label: 'Cargar Heladera', allowedRoles: ['ROLE_ADMIN'] },
     { path: '/distribucion-viandas', img: Product, label: 'Distribución Viandas', allowedRoles: ['ROLE_ADMIN', 'ROLE_COLLABORATOR'] },
+    { path: '/reconocimientos-extra', img: Product, label: 'Reconocimeintos Extra', allowedRoles: ['ROLE_ADMIN', 'ROLE_COLLABORATOR'] },
     { action: () => setIsCSVModalOpen(true), img: Product, label: 'Cargar CSV', allowedRoles: ['ROLE_ADMIN'] },
   ];
 
