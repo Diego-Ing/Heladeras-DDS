@@ -21,6 +21,7 @@ import {
     HStack,
     useDisclosure,
     useToast,
+    Spinner,
 } from '@chakra-ui/react';
 import { useAuth } from '../config/authContext';
 import IcoHeladera from '../assets/iconos/Food.svg';
@@ -75,9 +76,44 @@ function SuscripcionHeladeraContent() {
     const [tiposContactosSeleccionados, setTiposContactosSeleccionados] = useState([]);
     const [viandasNumberMax, setViandasNumberMax] = useState('');
     const [viandasNumberMin, setViandasNumberMin] = useState('');
-    const { accessToken } = useAuth();
+    const [contactos, setContactos] = useState([]);
+    const { accessToken, userSub } = useAuth();
+    const [loadingSuscripcion, setSuscripcion] = useState(null);
     const toast = useToast();
 
+    useEffect(() => {
+        const fetchContactos = async () => {
+            try {
+                const response = await fetch(`https://heladeras-dds-back.onrender.com/users/contactos?UUID=${userSub}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
+
+                if (!response.ok) throw new Error('Error al cargar los contactos.');
+                const data = await response.json();
+                // Mapear contactos recibidos
+                setContactos(
+                    data.map((contacto) => ({
+                        tipo: contacto.tipo,
+                        valor: contacto.valor,
+                    }))
+                );
+            } catch (error) {
+                toast({
+                    title: 'Error',
+                    description: error.message,
+                    status: 'error',
+                    duration: 5000,
+                    isClosable: true,
+                });
+            }
+        };
+
+        fetchContactos();
+    }, [accessToken, toast]);
     // Fetch de heladeras
     useEffect(() => {
         const abortController = new AbortController();
@@ -124,7 +160,7 @@ function SuscripcionHeladeraContent() {
     const colaboradorUUID = localStorage.getItem('sub');
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         const suscripcionDTO = {
             colaboradorUUID: colaboradorUUID,
             heladeraId: selectedHeladera?.id,
@@ -133,9 +169,11 @@ function SuscripcionHeladeraContent() {
             cantidadViandasMax: parseInt(viandasNumberMax, 10) || 0,
             cantidadViandasMin: parseInt(viandasNumberMin, 10) || 0,
         };
-
+    
         try {
-
+            // Establecer el estado de carga
+            setSuscripcion(selectedHeladera?.id);
+            
             const response = await fetch('https://heladeras-dds-back.onrender.com/suscripciones/suscribir', {
                 method: 'POST',
                 headers: {
@@ -144,29 +182,49 @@ function SuscripcionHeladeraContent() {
                 },
                 body: JSON.stringify(suscripcionDTO),
             });
-
-            if (!response.ok) throw new Error('Error al suscribir colaborador.');
-
-            const data = await response.json();
-            toast({
-                title: 'Éxito',
-                description: 'Colaborador suscrito exitosamente.',
-                status: 'success',
-                duration: 5000,
-                isClosable: true,
-            });
-            onClose();
+    
+            // Verifica el código de respuesta HTTP
+            if (response.ok) {
+                const result = await response.text();
+                console.log('Resultado:', result);
+                toast({
+                    title: 'Éxito',
+                    description: 'Colaborador suscrito exitosamente.',
+                    status: 'success',
+                    duration: 5000,
+                    isClosable: true,
+                });
+                onClose();
+            } else if (response.status === 409) {
+                // Si el código es 409, el colaborador ya está suscripto
+                toast({
+                    title: 'Advertencia',
+                    description: 'Usted ya está suscripto a esta heladera.',
+                    status: 'warning',
+                    duration: 5000,
+                    isClosable: true,
+                });
+                onClose();
+            } else {
+                // Si hay otro tipo de error, mostramos el mensaje de error
+                const errorText = await response.text();
+                throw new Error(errorText || 'Error al suscribir colaborador.');
+            }
         } catch (error) {
             console.error('Error al enviar la suscripción:', error);
             toast({
-                title: 'Error',
-                description: 'No se pudo completar la suscripción.',
+                title: 'Warning',
+                description: error.message || 'No se pudo completar la suscripción.',
                 status: 'error',
                 duration: 5000,
                 isClosable: true,
             });
+        } finally {
+            // Desactivar el estado de carga
+            setSuscripcion(null);
         }
     };
+    
 
     const filteredHeladeras = heladeras.filter((h) =>
         h.nombrePunto.toLowerCase().includes(searchTerm.toLowerCase())
@@ -206,78 +264,87 @@ function SuscripcionHeladeraContent() {
                 </Grid>
             )}
 
-            <Modal isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay />
-                <ModalContent>
-                    <ModalHeader>Formulario de Suscripción para {selectedHeladera?.nombrePunto}</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
-                        <form onSubmit={handleSubmit}>
-                            <VStack spacing={4}>
-                                <CheckboxGroup
-                                    value={tiposEventosSeleccionados}
-                                    onChange={(values) => {
-                                        setTiposEventosSeleccionados(values);
-                                    }}
-                                >
-                                    <VStack align="start">
-                                        <Text fontWeight="bold">Tipos de Eventos:</Text>
-                                        <Checkbox value="POCAS_VIANDAS">Pocas Viandas</Checkbox>
-                                        <Checkbox value="MUCHAS_VIANDAS">Muchas Viandas</Checkbox>
-                                        <Checkbox value="FALLA_TECNICA">Falla Técnica</Checkbox>
-                                    </VStack>
-                                </CheckboxGroup>
+<Modal isOpen={isOpen} onClose={onClose}>
+    <ModalOverlay />
+    <ModalContent>
+        <ModalHeader>Formulario de Suscripción para {selectedHeladera?.nombrePunto}</ModalHeader>
+        <ModalCloseButton />
+        
+        <ModalBody>
+            <form onSubmit={handleSubmit}>
 
-                                <CheckboxGroup
-                                    value={tiposContactosSeleccionados}
-                                    onChange={setTiposContactosSeleccionados}
-                                >
-                                    <VStack align="start">
-                                        <Text fontWeight="bold">Tipos de Contactos:</Text>
-                                        <Checkbox value="EMAIL">Email</Checkbox>
-                                        <Checkbox value="TELEFONO">Teléfono</Checkbox>
-                                        <Checkbox value="WHATSAPP">WhatsApp</Checkbox>
-                                        <Checkbox value="TELEGRAM">Telegram</Checkbox>
-                                    </VStack>
-                                </CheckboxGroup>
+            <VStack spacing={4}>
+            <CheckboxGroup
+                        value={tiposEventosSeleccionados}
+                        onChange={(values) => setTiposEventosSeleccionados(values)}
+                    >
+                        <VStack align="start">
+                            <Text fontWeight="bold">Tipos de Eventos:</Text>
+                            <Checkbox value="POCAS_VIANDAS">Pocas Viandas</Checkbox>
+                            <Checkbox value="MUCHAS_VIANDAS">Muchas Viandas</Checkbox>
+                            <Checkbox value="FALLA_TECNICA">Falla Técnica</Checkbox>
+                        </VStack>
+                    </CheckboxGroup>
+                    </VStack>
+                    <br></br>
+                <VStack spacing={4}>
+                    {/* Mostrar contactos del usuario */}
+                    <CheckboxGroup
+                        value={tiposContactosSeleccionados}
+                        onChange={setTiposContactosSeleccionados}
+                    >
+                        <VStack align="start">
+                            <Text fontWeight="bold">Contactos Disponibles:</Text>
+                            {contactos.length === 0 ? (
+                                <Text>No tienes contactos disponibles.</Text>
+                            ) : (
+                                contactos.map((contacto, index) => (
+                                    <Checkbox key={index} value={contacto.tipo.toUpperCase()}>
+                                        {contacto.tipo}: {contacto.valor}
+                                    </Checkbox>
+                                ))
+                            )}
+                        </VStack>
+                    </CheckboxGroup>
 
-                                <FormControl>
-                                    <Input
-                                        placeholder="Cantidad de viandas Mínima"
-                                        type="number"
-                                        value={viandasNumberMin}
-                                        onChange={(e) => setViandasNumberMin(e.target.value)}
-                                        isDisabled={
-                                            !tiposEventosSeleccionados.includes('POCAS_VIANDAS')
-                                        }
-                                    />
-                                </FormControl>
-                                <FormControl>
-                                    <Input
-                                        placeholder="Cantidad de viandas Maxima"
-                                        type="number"
-                                        value={viandasNumberMax}
-                                        onChange={(e) => setViandasNumberMax(e.target.value)}
-                                        isDisabled={
-                                            !tiposEventosSeleccionados.includes('MUCHAS_VIANDAS')
-                                        }
-                                    />
-                                </FormControl>
+                    {/* Opciones de eventos */}
+                    
 
+                    {/* Inputs para viandas */}
+                    <FormControl>
+                        <Input
+                            placeholder="Cantidad de viandas Mínima"
+                            type="number"
+                            value={viandasNumberMin}
+                            onChange={(e) => setViandasNumberMin(e.target.value)}
+                            isDisabled={!tiposEventosSeleccionados.includes('POCAS_VIANDAS')}
+                        />
+                    </FormControl>
+                    <FormControl>
+                        <Input
+                            placeholder="Cantidad de viandas Máxima"
+                            type="number"
+                            value={viandasNumberMax}
+                            onChange={(e) => setViandasNumberMax(e.target.value)}
+                            isDisabled={!tiposEventosSeleccionados.includes('MUCHAS_VIANDAS')}
+                        />
+                    </FormControl>
 
-                                <HStack spacing={4}>
-                                    <Button type="submit" colorScheme="green">
-                                        Suscribirse
-                                    </Button>
-                                    <Button onClick={onClose} colorScheme="red">
-                                        Cancelar
-                                    </Button>
-                                </HStack>
-                            </VStack>
-                        </form>
-                    </ModalBody>
-                </ModalContent>
-            </Modal>
+                    {/* Botones */}
+                    <HStack spacing={4}>
+                    <Button type="submit" colorScheme="green">
+                    {loadingSuscripcion === selectedHeladera?.id ? <Spinner size="sm" /> : 'Suscribirse'}
+                        </Button>
+                        <Button onClick={onClose} colorScheme="red">
+                            Cancelar
+                        </Button>
+                    </HStack>
+                </VStack>
+            </form>
+        </ModalBody>
+    </ModalContent>
+</Modal>
+
 
         </Box>
     );
