@@ -21,12 +21,12 @@ function MapApp() {
   useEffect(() => {
     const fetchLocations = async () => {
       try {
-        const response = await fetch('https://heladeras-dds-back.onrender.com/ubicaciones-googlemaps', {
+        const response = await fetch('http://localhost:8080/ubicaciones-googlemaps', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           },
-          credentials: 'include' 
+          credentials: 'include'
         });
         if (!response.ok) {
           throw new Error('Error de Red');
@@ -38,7 +38,7 @@ function MapApp() {
         console.error('Error al obtener las ubicaciones:', error);
       }
     };
-  
+
     fetchLocations();
   }, []);
 
@@ -61,16 +61,35 @@ function MapApp() {
     }
   };
 
+  const handleActivarHeladeras = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/heladeras/activar-heladeras', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      });
+      if (!response.ok) {
+        throw new Error('Error al activar las heladeras');
+      }
+      alert('Heladeras activadas correctamente');
+    } catch (error) {
+      console.error('Error al activar las heladeras:', error);
+      alert('Ocurrió un error al activar las heladeras');
+    }
+  };
+
   if (!isLoaded) {
     return <div>Loading...</div>;
   }
 
   const getMarkerIcon = (heladeraFuncionando) => {
     return heladeraFuncionando ? undefined : IcoAlerta;
-  }
+  };
 
   return (
-    <div style={{width: '100%', height: '100vh' }}>
+    <div style={{ width: '100%', height: '100vh', position: 'relative' }}>
       <GoogleMap
         center={mapCenter}
         zoom={zoom}
@@ -101,6 +120,25 @@ function MapApp() {
         )}
       </GoogleMap>
       <SearchMapApp onSearch={handleSearch} />
+      {/* Botón en el borde inferior derecho */}
+      <button
+        onClick={handleActivarHeladeras}
+        style={{
+          position: 'absolute',
+          bottom: '20px',
+          right: '20px',
+          padding: '10px 15px',
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          color: 'white',
+          border: 'none',
+          borderRadius: '5px',
+          cursor: 'pointer',
+          fontSize: '12px',
+          zIndex: 10,
+        }}
+      >
+        Activar Heladeras
+      </button>
     </div>
   );
 }
