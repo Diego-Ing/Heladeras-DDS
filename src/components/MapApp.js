@@ -21,7 +21,7 @@ function MapApp() {
   useEffect(() => {
     const fetchLocations = async () => {
       try {
-        const response = await fetch('http://localhost:8080/ubicaciones-googlemaps', {
+        const response = await fetch('https://heladeras-dds-back.onrender.com/ubicaciones-googlemaps', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -32,7 +32,6 @@ function MapApp() {
           throw new Error('Error de Red');
         }
         const data = await response.json();
-        console.log(data);
         setLocations(data);
       } catch (error) {
         console.error('Error al obtener las ubicaciones:', error);
@@ -73,10 +72,8 @@ function MapApp() {
       if (!response.ok) {
         throw new Error('Error al activar las heladeras');
       }
-      alert('Heladeras activadas correctamente');
     } catch (error) {
       console.error('Error al activar las heladeras:', error);
-      alert('Ocurrió un error al activar las heladeras');
     }
   };
 
