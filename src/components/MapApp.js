@@ -126,7 +126,7 @@ function MapApp() {
         style={{
           position: 'absolute',
           bottom: '20px',
-          right: '20px',
+          left: '20px',
           padding: '10px 15px',
           backgroundColor: 'rgba(0, 0, 0, 0.5)',
           color: 'white',
