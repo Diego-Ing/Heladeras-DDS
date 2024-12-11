@@ -41,7 +41,7 @@ function UserProfileModal({ isOpen, onClose }) {
     { path: '/consulta-canje', img: Canje, label: 'Consultar o Canjear productos', allowedRoles: ['ROLE_ADMIN', 'ROLE_COLLABORATOR'] },
     { path: '/reportes', img: Report, label: 'Reportes', allowedRoles: ['ROLE_ADMIN'] },
     { path: '/publicar-producto', img: Product, label: 'Publicar Producto/Servicio', allowedRoles: ['ROLE_ADMIN', 'ROLE_COLLABORATOR'] },
-    { path: '/cargar-heladera', img: Product, label: 'Cargar Heladera', allowedRoles: ['ROLE_ADMIN'] },
+    { path: '/cargar-heladera', img: Product, label: 'Obtener Heladera', allowedRoles: ['ROLE_ADMIN'] },
     { path: '/distribucion-viandas', img: Product, label: 'Distribución Viandas', allowedRoles: ['ROLE_ADMIN', 'ROLE_COLLABORATOR'] },
     { path: '/reconocimientos-extra', img: Product, label: 'Reconocimeintos Extra', allowedRoles: ['ROLE_ADMIN', 'ROLE_COLLABORATOR'] },
     { action: () => setIsCSVModalOpen(true), img: Product, label: 'Cargar CSV', allowedRoles: ['ROLE_ADMIN'] },
@@ -55,48 +55,48 @@ function UserProfileModal({ isOpen, onClose }) {
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose} size="xl">
-  <ModalOverlay />
-  <ModalContent>
-    <ModalHeader textAlign="center">Opciones de Usuario</ModalHeader>
-    <ModalCloseButton />
-    <ModalBody>
-      {user?.email_verified ? (
-        <SimpleGrid columns={{ base: 2, md: 4 }} spacing={6}>
-          {filteredOptions.map((item, index) => (
-            <Box
-              key={index}
-              onClick={() =>
-                item.action ? item.action() : (navigate(item.path), onClose())
-              }
-              cursor="pointer"
-              display="flex"
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-              p={4}
-              borderWidth="1px"
-              borderRadius="md"
-              _hover={{ bg: 'gray.100' }}
-              width="130px"
-              minHeight="120px"
-            >
-              <Image src={item.img} alt={item.label} boxSize="60px" />
-              <Text mt={2} textAlign="center">
-                {item.label}
-              </Text>
-            </Box>
-          ))}
-        </SimpleGrid>
-      ) : (
-        <Flex justify="center" align="center" minHeight="150px">
-          <Text textAlign="center" fontWeight="bold" color="red.500">
-            Por favor, verifica tu email para acceder a estas opciones, si ya lo hiciste por favor vuelve a iniciar sesion.
-          </Text>
-        </Flex>
-      )}
-    </ModalBody>
-  </ModalContent>
-</Modal>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader textAlign="center">Opciones de Usuario</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            {user?.email_verified ? (
+              <SimpleGrid columns={{ base: 2, md: 4 }} spacing={6}>
+                {filteredOptions.map((item, index) => (
+                  <Box
+                    key={index}
+                    onClick={() =>
+                      item.action ? item.action() : (navigate(item.path), onClose())
+                    }
+                    cursor="pointer"
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                    justifyContent="center"
+                    p={4}
+                    borderWidth="1px"
+                    borderRadius="md"
+                    _hover={{ bg: 'gray.100' }}
+                    width="130px"
+                    minHeight="120px"
+                  >
+                    <Image src={item.img} alt={item.label} boxSize="60px" />
+                    <Text mt={2} textAlign="center">
+                      {item.label}
+                    </Text>
+                  </Box>
+                ))}
+              </SimpleGrid>
+            ) : (
+              <Flex justify="center" align="center" minHeight="150px">
+                <Text textAlign="center" fontWeight="bold" color="red.500">
+                  Por favor, verifica tu email para acceder a estas opciones, si ya lo hiciste por favor vuelve a iniciar sesion.
+                </Text>
+              </Flex>
+            )}
+          </ModalBody>
+        </ModalContent>
+      </Modal>
 
 
       {/* Modal para cargar CSV */}
